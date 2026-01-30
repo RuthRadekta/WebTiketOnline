@@ -2,28 +2,16 @@
 session_start(); 
 $isLoggedIn = isset($_SESSION['user_id']); 
 
-// Include the database connection file
+// Include database
 include_once '../connection/connect.php';
-
-// Get the database connection
 $pdo = getDatabaseConnection();
 
-// Query untuk mengambil events
-$stmt = $pdo->prepare("SELECT event_id, title, event_date, location, organizer_name, event_image_path FROM events LIMIT 10");
-$stmt->execute();
-$events = $stmt->fetchAll();
-
-// Periksa apakah pengguna sudah login
+// User Info
 if ($isLoggedIn) {
-    // Ambil user_id dari session
     $userId = $_SESSION['user_id'];
-
-    // Query untuk mengambil nama pengguna berdasarkan user_id
     $stmtUser = $pdo->prepare("SELECT name FROM users WHERE user_id = :user_id LIMIT 1");
     $stmtUser->execute(['user_id' => $userId]);
     $user = $stmtUser->fetch();
-
-    // Pastikan nama pengguna ditemukan
     $userName = $user ? htmlspecialchars($user['name']) : 'Pengguna';
 } else {
     $userName = null;
@@ -36,145 +24,195 @@ if ($isLoggedIn) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tentang Kami - LOKÉT</title>
+    <title>Tentang Kami - BÉLI TIKÉT</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    
     <link rel="stylesheet" type="text/css" href="../css/navbar_footer.css">
     <link rel="stylesheet" type="text/css" href="../css/tentang_kami.css">
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <!-- Logo -->
-            <a class="navbar-brand fw-bold" href="../index.php">BÉLI TIKÉT</a>
-
-            <!-- Search Bar -->
-            <div class="mx-auto" style="width: 40%;">
-                <div class="input-group">
-                    <input type="text" class="form-control search-bar" placeholder="Cari event seru di sini"
-                        id="searchInput" aria-label="Search">
-                    <button class="btn btn-primary d-flex align-items-center justify-content-center" type="button" style="width: 40px;">
-                        <img src="https://cdn-icons-png.flaticon.com/512/54/54481.png" alt="Cari" width="16" height="16">
-                    </button>
-                </div>
-            </div>
-
-            <!-- Menu Kanan -->
-            <div class="d-flex align-items-center gap-3">
-                <!-- Jelajah -->
-                <a href="../jelajah.php" class="btn btn-outline-light d-flex align-items-center gap-2 px-3">
-                    <i class="bi bi-compass"></i>
-                    <span>Jelajah</span>
-                </a>
-
-                <?php if (!$isLoggedIn): ?>
-                <!-- Daftar dan Masuk -->
-                <a href="register.php" class="btn btn-outline-light px-3">Daftar</a>
-                <a href="login.php" class="btn btn-primary px-3">Masuk</a>
-                <?php else: ?>
-                <!-- Profile Dropdown -->
-                <div class="dropdown">
-                    <a href="#" class="btn btn-light d-flex align-items-center gap-2 px-3" id="dropdownMenuButton" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <i class="fas fa-user-circle fa-lg"></i>
-                        <span><?php echo $userName ? htmlspecialchars($userName) : 'Profil'; ?></span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                        <li class="dropdown-header">Halo, <?php echo $userName ? htmlspecialchars($userName) : 'Pengguna'; ?></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Tiket Saya</a></li>
-                        <li><a class="dropdown-item" href="profile.php">Informasi Dasar</a></li>
-                        <li><a class="dropdown-item" href="pengaturan.php">Pengaturan</a></li>
-                        <li><a class="dropdown-item text-danger" href="logout.php">Keluar</a></li>
-                    </ul>
-                </div>
-                <?php endif; ?>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <div class="hero-section">
-        <div class="container">
-            <!-- Breadcrumb -->
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb justify-content-center">
-                    <li class="breadcrumb-item"><a href="../index.php">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Tentang Kami</li>
-                </ol>
-            </nav>
-            <?php
-            // Membaca isi file hero_text.txt
-            echo file_get_contents('../file_txt/hero_text.txt');
-            ?>
-        </div>
-    </div>
-
-    <!-- Content Section -->
-    <div class="content-section">
-        <div class="container">
-            <h2>Mengapa Memilih Kami?</h2>
-            <?php
-            // Membaca isi file content.txt
-            $content = file_get_contents('../file_txt/content_text.txt');
-            echo $content;
-            ?>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer>    
-        <div class="footer">
+    
+    <header>
+        <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <div class="row">
-                    <!-- Keamanan dan Privasi -->
-                    <div class="security-section text-center mt-4">
-                        <h5>Keamanan dan Privasi</h5>
-                        <img src="../assets/images/logo_bsi.png" alt="Logo BSI" class="mt-2 mb-4">
+                <a class="navbar-brand" href="../index.php">
+                    BÉLI<span style="color: #ff6b6b;">TIKÉT</span>.
+                </a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <div class="mx-auto my-3 my-lg-0 w-100 w-lg-50 px-lg-4">
+                        <form action="../jelajah.php" method="get" class="position-relative">
+                            <input type="text" name="search" class="form-control search-bar" placeholder="Cari event..." readonly onclick="window.location.href='../jelajah.php'">
+                            <button class="btn position-absolute top-50 end-0 translate-middle-y me-2 rounded-circle" type="button" style="background: #ff6b6b; width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; border: none;">
+                                <i class="bi bi-search text-white" style="font-size: 0.8rem;"></i>
+                            </button>
+                        </form>
                     </div>
 
-                    <!-- Social Media Icons -->
-                    <div class="social-media-section text-center">
-                        <h5>Ikuti Kami</h5>
-                        <div class="social-icons mt-3">
+                    <div class="d-flex align-items-center gap-3 justify-content-end">
+                        <a href="../jelajah.php" class="nav-link">Jelajah</a>
+                        <?php if (!$isLoggedIn): ?>
+                            <a href="register.php" class="btn btn-outline-dark rounded-pill px-4 btn-sm fw-bold">Daftar</a>
+                            <a href="login.php" class="btn btn-primary rounded-pill px-4 btn-sm fw-bold border-0">Masuk</a>
+                        <?php else: ?>
+                            <div class="dropdown">
+                                <a href="#" class="d-flex align-items-center text-decoration-none" data-bs-toggle="dropdown">
+                                    <div class="profile-icon">
+                                        <?php echo strtoupper(substr($userName, 0, 1)); ?>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 mt-2">
+                                    <li><h6 class="dropdown-header">Halo, <?php echo htmlspecialchars($userName); ?></h6></li>
+                                    <li><a class="dropdown-item" href="riwayat.php">Tiket Saya</a></li>
+                                    <li><a class="dropdown-item" href="profile.php">Profil</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" href="logout.php">Keluar</a></li>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Tentang Kami</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item"><a href="../index.php">Beranda</a></li>
+                    <li class="breadcrumb-item active text-white opacity-75" aria-current="page">Tentang Kami</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container pb-5">
+        
+        <div class="about-text-block">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <img src="../img/group/Foto_Formal.jpeg" onerror="this.style.display='none'" class="img-fluid mb-4 mb-lg-0" alt="About Illustration">
+                    </div>
+                <div class="col-lg-6">
+                    <h2 class="mb-4">Cerita Kami</h2>
+                    <div class="about-content">
+                        <?php
+                        $heroFile = '../file_txt/hero_text.txt';
+                        if (file_exists($heroFile)) {
+                            echo nl2br(file_get_contents($heroFile));
+                        } else {
+                            echo "<p>BÉLI TIKÉT adalah platform penjualan tiket event terdepan yang menghubungkan event creator dengan audiens mereka. Kami percaya bahwa setiap momen berharga layak dirayakan.</p>";
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-5">
+            <div class="col-12 text-center mb-4">
+                <h2 class="fw-bold">Mengapa Memilih Kami?</h2>
+                <p class="text-muted">Kami memberikan pengalaman terbaik untuk setiap event Anda.</p>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-shield-check"></i></div>
+                    <h5 class="feature-title">Transaksi Aman</h5>
+                    <p class="feature-desc">Sistem pembayaran terintegrasi dengan keamanan tingkat tinggi untuk kenyamanan Anda.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-lightning-charge"></i></div>
+                    <h5 class="feature-title">Proses Cepat</h5>
+                    <p class="feature-desc">Pesan tiket dalam hitungan detik. E-ticket langsung dikirim ke email Anda.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="bi bi-headset"></i></div>
+                    <h5 class="feature-title">Layanan 24/7</h5>
+                    <p class="feature-desc">Tim support kami siap membantu kendala pemesanan Anda kapan saja.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="text-center">
+                    <?php
+                    $contentFile = '../file_txt/content_text.txt';
+                    if (file_exists($contentFile)) {
+                        echo nl2br(file_get_contents($contentFile));
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="footer">
+            <div class="container">
+                <div class="row gy-4">
+                    <div class="col-lg-4 col-md-6">
+                        <h4 class="mb-3">BÉLI<span style="color: #ff6b6b;">TIKÉT</span>.</h4>
+                        <p>Platform pembelian tiket event terpercaya.</p>
+                        <div class="social-icons mt-4">
                             <a href="#"><i class="bi bi-instagram"></i></a>
-                            <a href="#"><i class="bi bi-tiktok"></i></a>
                             <a href="#"><i class="bi bi-twitter-x"></i></a>
-                            <a href="#"><i class="bi bi-linkedin"></i></a>
-                            <a href="#"><i class="bi bi-youtube"></i></a>
                             <a href="#"><i class="bi bi-facebook"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6">
+                        <h5 class="mb-3">Navigasi</h5>
+                        <ul>
+                            <li><a href="../jelajah.php">Jelajah</a></li>
+                            <li><a href="tentang_kami.php">Tentang Kami</a></li>
+                            <li><a href="#">Blog</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6">
+                        <h5 class="mb-3">Bantuan</h5>
+                        <ul>
+                            <li><a href="#">Pusat Bantuan</a></li>
+                            <li><a href="#">Kebijakan Privasi</a></li>
+                            <li><a href="#">Syarat & Ketentuan</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <h5 class="mb-3">Pembayaran</h5>
+                        <div class="p-3 bg-white rounded-3 d-inline-block">
+                            <img src="../assets/images/logo_bsi.png" alt="Bank" style="height: 25px;">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Footer Bottom -->
-        <div class="footer-bottom">
+        <div class="footer-bottom text-center">
             <div class="container">
-                <div class="footer-links">
-                    <a href="tentang_kami.php">Tentang Kami</a>
-                    <span>•</span>
-                    <a href="#">Blog</a>
-                    <span>•</span>
-                    <a href="#">Kebijakan Privasi</a>
-                    <span>•</span>
-                    <a href="#">Kebijakan Cookie</a>
-                    <span>•</span>
-                    <a href="#">Panduan</a>
-                    <span>•</span>
-                    <a href="#">Hubungi Kami</a>
-                </div>
-                <p class="copyright">&copy; 2024 Beli Tiket (PT Global Loket Sejahtera)</p>
+                &copy; 2024 PT Global Loket Sejahtera.
             </div>
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../javascript/navbar.js"></script>
 </body>
-
 </html>
