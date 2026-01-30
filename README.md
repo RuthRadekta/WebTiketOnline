@@ -1,4 +1,4 @@
-# **LOKET COM**
+# **BELI TIKET**
 
 ## **Deskripsi Proyek**
 Proyek ini adalah Website untuk melayani **Pemesanan Tiket** dan **Admin Panel**. Proyek ini mencakup berbagai fitur yang diperlukan seperti koneksi database, CRUD, autentikasi pengguna, dan banyak lagi.
