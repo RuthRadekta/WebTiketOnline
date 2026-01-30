@@ -1,4 +1,4 @@
-# **LOKET COM**
+# **BELI TIKET**
 
 ## **Deskripsi Proyek**
 Proyek ini adalah Website untuk melayani **Pemesanan Tiket** dan **Admin Panel**. Proyek ini mencakup berbagai fitur yang diperlukan seperti koneksi database, CRUD, autentikasi pengguna, dan banyak lagi.
@@ -7,7 +7,8 @@ Proyek ini adalah Website untuk melayani **Pemesanan Tiket** dan **Admin Panel**
 **User**:
 - **Halaman Register dan Login**: Terdapat halaman registrasi dan login untuk pengguna dengan peran yang sesuai (misalnya admin, user).
 - **Mengakses dan Mengeksplorasi Tiket Konser**: Di halaman utama maupun di halaman pencarian.
-- **Memesan Tiket (Dummy)**: Secara realtime.
+- **Memesan Tiket (Dummy)**: Secara realtime hanya untuk pengguna yang login.
+- **Akses Menu Profil dan Riwayat**: Pengguna dapat meninjau profil dan riwayat pemesannya.
 
 **Admin**:
 - **Koneksi ke Database**: Sistem terhubung ke database untuk menyimpan dan mengambil data.
@@ -21,3 +22,5 @@ Proyek ini adalah Website untuk melayani **Pemesanan Tiket** dan **Admin Panel**
 
 ## Instalasi
 Clone Repositori ini: https://github.com/RuthRadekta/WebTiketOnline.git
+Login as admin: admin@gmail.com || admin
+Login as user (dummy): erwin@gmail.com || erwin
