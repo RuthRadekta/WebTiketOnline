@@ -20,4 +20,4 @@ Proyek ini adalah Website untuk melayani **Pemesanan Tiket** dan **Admin Panel**
 - **Grafik**: Menampilkan data dalam bentuk grafik menggunakan library yang sesuai.
 
 ## Instalasi
-Clone Repositori ini: 
+Clone Repositori ini: https://github.com/RuthRadekta/WebTiketOnline.git
