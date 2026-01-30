@@ -1,36 +1,178 @@
-/* Custom Styling */
-.carousel-item img {
-    object-fit: cover;
-    height: 400px;
+/* --- K-Pop Vibrant Palette --- */
+:root {
+    /* Gradient Utama: Deep Purple ke Electric Blue */
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --hover-gradient: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    
+    /* Aksen: Warna Coral Pink yang cerah untuk tombol/notif */
+    --accent-color: #FF4B6E; 
+    
+    /* Background: Putih gading sangat muda (bukan putih polos agar tidak sakit mata) */
+    --bg-body: #F9FAFD;
+    
+    /* Text */
+    --text-main: #2D3436;
+    --text-muted: #636e72;
+    
+    --card-radius: 24px; /* Sudut lebih bulat lagi */
+    --shadow-soft: 0 10px 40px rgba(118, 75, 162, 0.08); /* Bayangan berwarna ungu tipis */
 }
 
-.event-card img {
-    object-fit: cover;
-    height: 200px;
+body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-main);
 }
 
-.event-card {
+a { text-decoration: none !important; }
+
+/* --- Hero Carousel --- */
+.hero-img {
+    height: 520px;
+    object-fit: cover;
+    /* Memberikan efek sedikit 'dingin' pada foto agar teks lebih pop */
+    filter: brightness(0.95) contrast(1.1); 
+}
+
+/* Overlay Gradient yang lebih estetik (Transparent to Purple-Black) */
+.hero-overlay {
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(to top, rgba(30, 10, 60, 0.8) 0%, rgba(30, 10, 60, 0.2) 50%, rgba(0,0,0,0) 100%);
+}
+
+.hero-text h1 {
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+/* Indikator Carousel Kapsul */
+.creative-indicators {
+    bottom: 30px;
+}
+.creative-indicators button {
+    background-color: rgba(255, 255, 255, 0.4);
+    border: none;
+    height: 6px;
+    margin: 0 4px;
     border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 20px;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
-.event-card .card-title {
-    white-space: nowrap; /* Pastikan teks tidak membungkus ke baris berikutnya */
-    overflow: hidden; /* Potong teks yang melebihi batas */
-    text-overflow: ellipsis; /* Tambahkan elipsis ("...") di akhir teks */
-}
-
-.event-card .card-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Pastikan teks tidak merenggangkan kartu */
-    height: 100%; /* Agar teks tetap proporsional dalam kartu */
+.creative-indicators button.active {
+    background-color: #fff;
+    width: 40px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
-.promo-banner img {
-    width: 100%;
+/* --- Top Events (Asymmetric Layout) --- */
+.gradient-overlay-bottom {
+    background: linear-gradient(to top, #000000 0%, transparent 100%);
+}
+
+/* Angka Ranking dengan Efek Gradient Text */
+.rank-badge-big {
+    font-size: 5rem;
+    font-weight: 900;
+    background: linear-gradient(to bottom, #fff 0%, rgba(255,255,255,0) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0.8;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    z-index: 1;
+}
+
+.rank-badge-small {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #e2e8f0; /* Abu-abu muda */
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    opacity: 0.5;
+}
+
+/* Efek Hover Lift yang lebih smooth */
+.hover-lift {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+}
+.hover-lift:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: var(--shadow-soft);
+}
+
+/* --- Regular Event Cards --- */
+.event-card {
+    background: #ffffff;
+    border: none !important;
+    border-radius: var(--card-radius);
+    transition: all 0.4s ease;
+    overflow: hidden;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px rgba(108, 92, 231, 0.15); /* Bayangan ungu */
+}
+
+.event-img {
+    height: 230px;
     object-fit: cover;
+    transition: transform 0.6s ease;
+}
+.event-card:hover .event-img {
+    transform: scale(1.08);
 }
 
-a{
-    text-decoration: none !important;
+/* Tag Kategori Melayang dengan Gradient Border */
+.category-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    background: #ffffff;
+    color: #6c5ce7;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* Judul Card */
+.card-title {
+    color: var(--text-main);
+    font-weight: 700;
+}
+
+/* --- Buttons & Utilities --- */
+/* Mengubah tombol primary menjadi Gradient */
+.btn-primary {
+    background: var(--primary-gradient);
+    border: none;
+    box-shadow: 0 4px 15px rgba(118, 75, 162, 0.3);
+}
+
+.btn-primary:hover {
+    background: var(--hover-gradient);
+    box-shadow: 0 8px 25px rgba(118, 75, 162, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Badge 'Featured' atau 'Must Visit' */
+.badge.bg-dark {
+    background: var(--text-main) !important;
+}
+.badge.bg-danger {
+    background: var(--accent-color) !important;
+    box-shadow: 0 4px 10px rgba(255, 75, 110, 0.3);
+}
+
+/* Section Titles */
+h2.fw-bold {
+    color: var(--text-main);
+    letter-spacing: -0.5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-img { height: 350px; }
 }

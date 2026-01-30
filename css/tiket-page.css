@@ -1,190 +1,198 @@
-/* Gradient Box */
-.gradient-box {
-    background: linear-gradient(to bottom right, #f8b9c8, #8a8dc9);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+/* --- Global Variables (Sesuai Brand Anda) --- */
+:root {
+    --primary-color: #3c4c8c;
+    --secondary-color: #6A9CFD;
+    --bg-body: #F9FAFD;
+    --text-dark: #2D3436;
+    --text-muted: #666666;
+    --card-radius: 12px;
+    --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
-    nav {
-        display: none;
-    }
-    .event-card {
-        text-align: left;
-    }
-    .event-details {
-        justify-content: flex-start;
-    }
-    .event-details p {
-        font-size: 0.8rem; /* Ukuran teks lebih kecil di layar kecil */
-    }
-    .event-details i {
-        font-size: 0.9rem;
-    }
-    .event-divider {
-        margin: 1rem 0;
-    }
+body {
+    background-color: var(--bg-body);
+    font-family: 'Quicksand', sans-serif; /* Pastikan font ini di-load di <head> */
 }
 
-.shadow {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* --- Banner Image Fix --- */
+.event-header-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    background-color: #e9ecef; /* Placeholder color saat loading */
 }
 
-.bg-light {
-    background-color: #ffffff;
+/* Mencegah gambar terlalu besar */
+.event-banner {
+    width: 100%;
+    height: 400px; /* Tinggi tetap agar rapi */
+    object-fit: cover; /* Memotong gambar agar pas tanpa gepeng */
+    object-position: center;
+    display: block;
 }
 
-main {
-    flex: 1; /* Membuat konten utama mengisi sisa ruang di antara header dan footer */
+/* Badge Jenis Event (Pojok Kiri Atas Gambar) */
+.event-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--primary-color);
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 2;
 }
 
-.bg-primary {
-    background-color: #3c4c8c !important; /* Menimpa warna default Bootstrap */
-    color: white !important; /* Warna teks tetap putih */
+/* --- Tab Navigation (Sesuai Referensi + Modern Touch) --- */
+.nav-tabs {
+    border-bottom: 2px solid #e9ecef;
+    margin-bottom: 20px;
 }
 
-/* Gradient Background untuk tombol "Beli Tiket" */
-.btn-gradient {
-    background: linear-gradient(to top right, #3c4c8c, #ecddd9, #f1b0bb); /* Gradasi awal */
-    color: white; /* Warna teks putih */
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    transition: background-position 0.3s ease, color 0.3s ease; /* Transisi untuk posisi latar belakang dan warna teks */
-    background-size: 200% 200%; /* Mengatur ukuran latar belakang untuk efek pergerakan */
-    background-position: bottom left; /* Posisi awal latar belakang */
-}
-
-/* Hover Effect: Gradasi bergerak dan berubah menjadi #3c4c8c */
-.btn-gradient:hover {
-    background-position: top right; /* Menggerakkan latar belakang saat hover */
-    background: linear-gradient(to top right, #3c4c8c, #3c4c8c, #3c4c8c); /* Gradasi berubah menjadi satu warna */
-    color: #ecddd9; /* Warna teks saat hover */
-}
-
-.text-primary{
-    color: #6A9CFD !important;
-}
-
-/* Event Card Styling */
-.event-card {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.event-card h4 {
-    font-size: 1.5rem;
-    color: #3c4c8c;
-}
-
-/* Event Details Styling */
-.event-details {
-    text-align: left; /* Ubah teks menjadi rata kiri */
-    margin-left: 1rem; /* Tambahkan sedikit jarak kiri untuk tampilan lebih rapi */
-}
-
-/* Event Details - Smaller Font */
-.event-details p {
-    margin: 0.3rem 0;
-    font-size: 0.9rem; /* Ukuran teks lebih kecil */
-    color: #666666;
-    display: flex;
-    align-items: left;
-    justify-content: left;
-    text-align: left;
-    gap: 0.5rem;
-}
-
-.event-details i {
-    font-size: 1rem; /* Ukuran ikon disesuaikan agar proporsional */
-    color: #3c4c8c;
-}
-
-.event-organizer p, h5 {
-    align-items: left;
-    justify-content: left;
-    text-align: left;
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-    color: #999999;
-}
-
-/* Icon Styles */
-.event-details i {
-    font-size: 1.2rem;
-    color: #3c4c8c;
-}
-
-/* Garis Pemisah */
-.event-divider {
-    border-top: 1px solid #ddd; /* Garis tipis */
-    margin: 1rem 0; /* Spasi di atas dan bawah garis */
-}
-
-/* Detail Event Styling */
-.event-detail {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-top: 20px;
-}
-
-.event-detail h4 {
-    font-size: 1.5rem;
-    color: #3c4c8c;
-    margin-bottom: 1rem;
-}
-
-.event-detail p {
-    font-size: 1rem;
-    color: #666666;
-    margin-bottom: 1rem;
-}
-
-.event-detail ul {
-    padding-left: 1.5rem;
-    list-style-type: disc;
-}
-
-.event-detail ul li {
-    font-size: 0.95rem;
-    color: #444444;
-    margin-bottom: 0.5rem;
-}
-
-/* Tab Navigation Styling */
 .nav-tabs .nav-link {
-    color: #c0c8cf;
+    color: #999;
     border: none;
-    font-weight: bold;
+    font-weight: 600;
     text-transform: uppercase;
-}
-
-.nav-tabs .nav-link.active {
-    color: #3c4c8c;
-    border-bottom: 3px solid #3c4c8c;
+    padding: 12px 20px;
+    background: transparent;
+    transition: color 0.3s;
 }
 
 .nav-tabs .nav-link:hover {
-    color: #495057;
+    color: var(--primary-color);
 }
 
-.tab-content {
-    /*background-color: #ffffff;*/
-    padding: 20px;
-    border-radius: 10px;
-    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+.nav-tabs .nav-link.active {
+    color: var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+    background: transparent;
 }
 
-.tab-pane h4 {
-    color: #3c4c8c;
-    margin-bottom: 1rem;
+.tab-pane {
+    padding: 10px 0;
+    color: var(--text-muted);
+    line-height: 1.7;
 }
 
-.tab-pane p {
-    color: #666666;
+/* List Detail Event */
+.detail-list {
+    list-style: none;
+    padding: 0;
+}
+
+.detail-list li {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.detail-list i {
+    color: var(--secondary-color);
+    margin-right: 12px;
+    font-size: 1.2rem;
+    margin-top: 2px;
+}
+
+/* --- Sticky Sidebar (Kartu Beli Tiket) --- */
+/* Hanya sticky di layar besar (Desktop) */
+@media (min-width: 992px) {
+    .sticky-sidebar {
+        position: sticky;
+        top: 100px; /* Jarak dari navbar */
+        z-index: 10;
+    }
+}
+
+.purchase-card {
+    background: white;
+    border-radius: var(--card-radius);
+    padding: 25px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(0,0,0,0.03);
+}
+
+.event-meta-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.meta-icon {
+    width: 35px;
+    height: 35px;
+    background: #f0f3ff;
+    color: var(--primary-color);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 1rem;
-    margin-bottom: 1rem;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+/* Organizer Section */
+.organizer-info {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+    align-items: center;
+}
+
+.organizer-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #f1f2f6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    color: #b2bec3;
+}
+
+/* --- Button Gradient (Sesuai Referensi) --- */
+.btn-gradient {
+    background: linear-gradient(to top right, #3c4c8c, #8a8dc9, #f1b0bb);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    width: 100%;
+    display: block;
+    text-align: center;
+    transition: all 0.3s ease;
+    background-size: 200% 200%;
+    background-position: bottom left;
+}
+
+.btn-gradient:hover {
+    background-position: top right;
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(60, 76, 140, 0.3);
+    transform: translateY(-2px);
+}
+
+/* --- Responsive Mobile --- */
+@media (max-width: 768px) {
+    .event-banner {
+        height: 250px; /* Gambar lebih pendek di HP */
+    }
+    
+    .purchase-card {
+        margin-top: 20px; /* Beri jarak di mobile karena sidebar turun ke bawah */
+        position: relative; /* Hilangkan sticky di mobile */
+        top: 0;
+    }
+
+    h1.display-5 {
+        font-size: 1.8rem; /* Judul tidak terlalu besar di HP */
+    }
 }

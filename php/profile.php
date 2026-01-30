@@ -12,8 +12,19 @@ if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-// Tentukan halaman aktif untuk highlight
 $current_page = basename($_SERVER['PHP_SELF']);
+
+// Ambil data user dari DB untuk ditampilkan di Navbar/Form
+include_once '../connection/connect.php';
+try {
+    $pdo = getDatabaseConnection();
+    $stmt = $pdo->prepare("SELECT name, email FROM users WHERE user_id = :id");
+    $stmt->execute(['id' => $_SESSION['user_id']]);
+    $user = $stmt->fetch();
+    $userName = $user ? htmlspecialchars($user['name']) : 'Pengguna';
+} catch(Exception $e) {
+    $userName = 'Pengguna';
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,117 +33,165 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Kamu - BÉLI TIKÉT</title>
+    <title>Profil Saya - BÉLI TIKÉT</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    
     <link href="../css/profile.css" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <span class="fw-bold text-black"></span>
-            <div class="dropdown-profile">
-                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile">
-                <span id="dropdown-name">Profil Anda</span>
-                <div class="dropdown-menu">
-                    <a href="../Jelajah.php">Jelajah <i class="bi bi-chevron-right"></i></a>
-                    <a href="riwayat.php">Tiket Saya <i class="bi bi-chevron-right"></i></a>
-                    <a href="profile.php">Informasi Dasar <i class="bi bi-chevron-right"></i></a>
-                    <a href="pengaturan.php">Pengaturan <i class="bi bi-chevron-right"></i></a>
-                    <div class="dropdown-divider"></div>
-                    <a href="logout.php" class="text-danger">Keluar <i class="bi bi-chevron-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <a href="../index.php" class="logo">
-            <i class="bi bi-house"></i><span>BÉLI TIKÉT</span>
+            <i class="bi bi-ticket-perforated-fill"></i>
+            <span>BÉLI TIKÉT</span>
         </a>
-        <a href="../Jelajah.php" class="<?php echo $current_page == 'index.php' ? 'active' : ''; ?>">
-            <i class="bi bi-house"></i><span>Jelajah Event</span>
-        </a>
-        <a href="../php/riwayat.php" class="<?php echo $current_page == 'tickets.php' ? 'active' : ''; ?>">
-            <i class="bi bi-ticket-perforated"></i><span>Tiket Saya</span>
-        </a>
-        <a href="profile.php" class="<?php echo $current_page == 'profile.php' ? 'active' : ''; ?>">
-            <i class="bi bi-person"></i><span>Informasi Dasar</span>
-        </a>
-        <a href="pengaturan.php" class="<?php echo $current_page == 'pengaturan.php' ? 'active' : ''; ?>">
-            <i class="bi bi-gear"></i><span>Pengaturan</span>
-        </a>
-        <button class="toggle-button" onclick="toggleSidebar()">
-            <i class="bi bi-chevron-left text-white"></i><span>Shrink</span>
-        </button>
+
+        <div class="sidebar-menu">
+            <a href="../index.php" class="nav-link">
+                <i class="bi bi-house-door"></i><span>Beranda</span>
+            </a>
+            <a href="../jelajah.php" class="nav-link">
+                <i class="bi bi-compass"></i><span>Jelajah Event</span>
+            </a>
+            <div class="mt-3 mb-2 text-white-50 small px-3 text-uppercase fw-bold" style="font-size: 0.75rem;">Akun</div>
+            <a href="profile.php" class="nav-link <?php echo $current_page == 'profile.php' ? 'active' : ''; ?>">
+                <i class="bi bi-person-circle"></i><span>Profil Saya</span>
+            </a>
+            <a href="riwayat.php" class="nav-link">
+                <i class="bi bi-ticket-detailed"></i><span>Tiket Saya</span>
+            </a>
+            <a href="pengaturan.php" class="nav-link <?php echo $current_page == 'pengaturan.php' ? 'active' : ''; ?>">
+                <i class="bi bi-gear"></i><span>Pengaturan</span>
+            </a>
+        </div>
+
+        <div class="toggle-btn-container">
+            <button class="toggle-button" onclick="toggleSidebar()">
+                <i class="bi bi-layout-sidebar"></i><span>Minimize</span>
+            </button>
+        </div>
     </div>
 
-    <!-- Profil Container -->
-    <div class="content-container">
-        <h2 class="content-header">Profil Kamu</h2>
-        <div class="profile-container">
-            <h2 class="profile-header">Informasi Dasar</h2>
+    <div class="content-container" id="content">
+        
+        <div class="profile-top-header">
+            <div>
+                <h2 class="mb-0">Profil Kamu</h2>
+                <p class="text-muted mb-0">Kelola informasi profil Anda untuk mengontrol, melindungi dan mengamankan akun.</p>
+            </div>
+            
+            <div class="dropdown">
+                <div class="user-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://ui-avatars.com/api/?name=<?php echo urlencode($userName); ?>&background=random" alt="Avatar">
+                    <span class="fw-bold d-none d-md-block text-dark"><?php echo $userName; ?></span>
+                    <i class="bi bi-chevron-down ms-2 small text-muted"></i>
+                </div>
+                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-2" style="border-radius: 12px;">
+                    <li><a class="dropdown-item" href="../index.php">Ke Beranda</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i>Keluar</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="profile-card">
+            <h4 class="section-title">Informasi Dasar</h4>
+            
             <form id="profile-form">
                 <input type="hidden" name="csrf_token" id="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Nama</label>
-                    <input type="text" class="form-control" id="name" name="name">
+                
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nama Lengkap</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan nama">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" readonly title="Email tidak dapat diubah">
+                            <div class="form-text text-muted small"><i class="bi bi-lock-fill"></i> Email tidak dapat diubah.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="gender" class="form-label">Jenis Kelamin</label>
+                            <select class="form-select" id="gender" name="gender">
+                                <option value="" disabled selected>Pilih...</option>
+                                <option value="Laki-laki">Laki-laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="phone_number" class="form-label">Nomor Telepon</label>
+                            <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="08xxxxxxxx">
+                        </div>
+                        <div class="mb-3">
+                            <label for="ktp_number" class="form-label">Nomor KTP (NIK)</label>
+                            <input type="text" class="form-control" id="ktp_number" name="ktp_number" placeholder="16 Digit Angka">
+                        </div>
+                        <div class="mb-3">
+                            <label for="date_of_birth" class="form-label">Tanggal Lahir</label>
+                            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth">
+                        </div>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" readonly>
+
+                <div class="d-flex justify-content-end mt-4 pt-3 border-top">
+                    <button type="submit" class="btn btn-save" id="btn-save">
+                        <i class="bi bi-check-circle me-2"></i>Simpan Perubahan
+                    </button>
                 </div>
-                <div class="mb-3">
-                    <label for="phone_number" class="form-label">Nomor Telepon</label>
-                    <input type="text" class="form-control" id="phone_number" name="phone_number">
-                </div>
-                <div class="mb-3">
-                    <label for="ktp_number" class="form-label">Nomor KTP</label>
-                    <input type="text" class="form-control" id="ktp_number" name="ktp_number">
-                </div>
-                <div class="mb-3">
-                    <label for="date_of_birth" class="form-label">Tanggal Lahir</label>
-                    <input type="date" class="form-control" id="date_of_birth" name="date_of_birth">
-                </div>
-                <div class="mb-3">
-                    <label for="gender" class="form-label">Jenis Kelamin</label>
-                    <select class="form-control" id="gender" name="gender">
-                        <option value="Laki-laki">Laki-laki</option>
-                        <option value="Perempuan">Perempuan</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
             </form>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Fetch profile data from API
+        // Sidebar Toggle Logic
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const content = document.getElementById('content');
+            
+            sidebar.classList.toggle('shrink');
+            content.classList.toggle('shrink');
+        }
+
+        // Fetch Data Logic
         document.addEventListener('DOMContentLoaded', async () => {
-            const response = await fetch('profile-api.php');
-            if (response.ok) {
-                const data = await response.json();
-                document.getElementById('name').value = data.name || '';
-                document.getElementById('email').value = data.email || '';
-                document.getElementById('phone_number').value = data.phone_number || '';
-                document.getElementById('ktp_number').value = data.ktp_number || '';
-                document.getElementById('date_of_birth').value = data.date_of_birth || '';
-                document.getElementById('gender').value = data.gender || '';
-                document.getElementById('dropdown-name').innerText = data.name || 'Profil Anda';
+            try {
+                const response = await fetch('profile-api.php');
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('name').value = data.name || '';
+                    document.getElementById('email').value = data.email || '';
+                    document.getElementById('phone_number').value = data.phone_number || '';
+                    document.getElementById('ktp_number').value = data.ktp_number || '';
+                    document.getElementById('date_of_birth').value = data.date_of_birth || '';
+                    document.getElementById('gender').value = data.gender || '';
+                }
+            } catch (error) {
+                console.error("Gagal mengambil data profil", error);
             }
         });
 
-        // Submit updated profile data
+        // Submit Form Logic
         document.getElementById('profile-form').addEventListener('submit', async (e) => {
             e.preventDefault();
+            const btn = document.getElementById('btn-save');
+            const originalText = btn.innerHTML;
+            
+            // Loading State
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menyimpan...';
+            btn.disabled = true;
+
             const formData = new FormData(e.target);
-            const csrfToken = formData.get('csrf_token');
             const body = {
-                csrf_token: csrfToken,
+                csrf_token: formData.get('csrf_token'),
                 name: formData.get('name'),
                 phone_number: formData.get('phone_number'),
                 ktp_number: formData.get('ktp_number'),
@@ -140,19 +199,25 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 gender: formData.get('gender'),
             };
 
-            const response = await fetch('profile-api.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(body),
-            });
+            try {
+                const response = await fetch('profile-api.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body),
+                });
 
-            if (response.ok) {
-                alert('Data berhasil diperbarui!');
-            } else {
-                alert('Gagal memperbarui data.');
+                if (response.ok) {
+                    alert('Data berhasil diperbarui!');
+                } else {
+                    alert('Gagal memperbarui data.');
+                }
+            } catch (error) {
+                alert('Terjadi kesalahan koneksi.');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
             }
         });
     </script>
 </body>
-
 </html>

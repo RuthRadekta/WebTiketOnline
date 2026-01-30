@@ -47,10 +47,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
                 exit();
             } else {
-                $error = "Email atau kata sandi salah.";
+                $error = "Kata sandi yang Anda masukkan salah.";
             }
         } else {
-            $error = "Email atau kata sandi salah.";
+            $error = "Email tidak ditemukan.";
         }
     } catch (PDOException $e) {
         echo "Koneksi gagal: " . $e->getMessage();
@@ -63,81 +63,93 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - BÉLI TIKÉT</title>
+    <title>Masuk - BÉLI TIKÉT</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/navbar_footer.css">
     <link rel="stylesheet" href="../css/login.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .login-container {
-            max-width: 400px;
-            margin: 80px auto;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        .btn-primary {
-            background-color: #0b2341;
-            border-color: #0b2341;
-        }
-        .btn-primary:hover {
-            background-color: #031125;
-            border-color: #031125;
-        }
-    </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="../index.php">BÉLI TIKÉT</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="btn bg-lightnav-link" href="../index.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-primary me-2" href="register.php">Daftar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-daftar-masuk-active btn-outline-light me-2 active" aria-current="page" href="login.php">Masuk</a>
-                    </li>
-                </ul>
+
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="../index.php">
+                    BÉLI<span style="color: #ff6b6b;">TIKÉT</span>.
+                </a>
+                
+                <div class="d-flex">
+                    <a href="../index.php" class="btn btn-outline-dark rounded-pill px-4 btn-sm fw-bold">
+                        <i class="bi bi-house-door me-1"></i> Beranda
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <div class="login-card">
+            <div class="text-center">
+                <h2 class="login-title">Selamat Datang!</h2>
+                <p class="login-subtitle">Silakan masuk untuk melanjutkan petualanganmu.</p>
+            </div>
+
+            <?php if (isset($error)) { ?>
+                <div class="alert alert-danger d-flex align-items-center mb-4" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <div><?php echo $error; ?></div>
+                </div>
+            <?php } ?>
+
+            <form method="POST" action="">
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+                    <label for="email">Alamat Email</label>
+                </div>
+
+                <div class="form-floating mb-4">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                    <label for="password">Kata Sandi</label>
+                </div>
+
+                <button type="submit" class="btn btn-gradient mb-3">
+                    Masuk Sekarang <i class="bi bi-arrow-right ms-2"></i>
+                </button>
+            </form>
+
+            <div class="text-center mt-4">
+                <p class="text-muted small">Belum punya akun? <a href="register.php" class="text-link">Daftar Gratis</a></p>
+                <a href="#" class="text-muted small text-decoration-none">Lupa kata sandi?</a>
             </div>
         </div>
-    </nav>
-
-    <!-- Form Login -->
-    <div class="login-container">
-        <h2 class="text-center mb-4">Masuk ke Akun Anda</h2>
-        <?php if (isset($error)) { ?>
-            <div class="alert alert-danger" role="alert">
-                <?php echo $error; ?>
-            </div>
-        <?php } ?>
-        <form method="POST" action="">
-            <div class="mb-3">
-                <label for="email" class="form-label">Alamat Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Kata Sandi</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Masuk</button>
-        </form>
-        <p class="mt-3 text-center">Belum punya akun? <a href="register.php">Daftar di sini</a></p>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-3">
-        <p class="mb-0">&copy; 2024 BÉLI TIKÉT. Semua Hak Dilindungi.</p>
+    <footer>
+        <div class="footer">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <h4 class="mb-2 text-white">BÉLI<span style="color: #ff6b6b;">TIKÉT</span>.</h4>
+                        <p class="small text-white-50 mb-0">Platform tiket event masa depan.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="social-icons">
+                            <a href="#"><i class="bi bi-instagram"></i></a>
+                            <a href="#"><i class="bi bi-twitter-x"></i></a>
+                            <a href="#"><i class="bi bi-facebook"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom text-center">
+            <div class="container">
+                &copy; <?php echo date('Y'); ?> PT Global Loket Sejahtera.
+            </div>
+        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

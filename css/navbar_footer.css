@@ -1,162 +1,422 @@
+/* --- Glassmorphism Navbar --- */
 .navbar {
-    background-color: #0b2341;
-    height: 65px;
+    background: rgba(255, 255, 255, 0.85); /* Putih Transparan */
+    backdrop-filter: blur(12px); /* Efek Blur di belakang navbar */
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
 }
 
+/* Logo Text Color */
+.navbar-brand {
+    font-family: 'Quicksand', sans-serif;
+    color: #2D3436 !important; /* Jadi Hitam/Gelap */
+}
+
+/* Link Navigasi */
+.nav-link {
+    color: #2D3436 !important; /* Teks menu jadi gelap */
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+}
+.nav-link:hover {
+    color: #6c5ce7 !important; /* Hover jadi Ungu */
+}
+
+/* Toggler untuk Mobile (Garis Tiga) */
+.navbar-toggler-icon {
+    filter: none; /* Reset filter invert agar ikon jadi hitam (default bootstrap svg) */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 0, 0, 0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* --- Search Bar (Soft Gray) --- */
 .search-bar {
-    background-color: #152c52;
-    color: white;
-    border: none;
+    background-color: #F0F2F5; /* Abu-abu sangat muda */
+    color: #2D3436;
+    border: 2px solid transparent;
+    border-radius: 50px !important;
+    padding: 10px 20px;
+    font-size: 0.9rem;
 }
 
 .search-bar::placeholder {
-    color: var(--placeholder-color, #a0b8d8);
+    color: #B2BEC3;
 }
 
-/* Change placeholder color on focus */
-.search-bar:focus::placeholder {
-    color: #000000;
+.search-bar:focus {
+    background-color: #fff;
+    border-color: #6c5ce7; /* Border Ungu saat mengetik */
+    box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
+    color: #2D3436;
 }
+
+/* --- Profile & Icons --- */
 .icon-link {
-    display: flex;
-    align-items: center;
-    color: white;
-    text-decoration: none;
-    margin-right: 1rem;
-    font-size: 0.9rem;
+    color: #2D3436; /* Icon jadi gelap */
 }
-
-.icon-link img {
-    width: 18px;
-    margin-right: 5px;
-    filter: invert(1);
+.icon-link:hover {
+    color: #6c5ce7;
 }
 
 .profile-icon {
-    width: 35px;
-    height: 35px;
-    background-color: white;
-    border: 2px solid #2f80ed;
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Gradient Profile */
+    color: white !important;
+    border: none;
     border-radius: 50%;
+    font-size: 1rem;
+    box-shadow: 0 4px 10px rgba(118, 75, 162, 0.3);
 }
 
+/* Dropdown Menu yang Estetik */
 .dropdown-menu {
-    min-width: 200px;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    padding: 15px;
+    margin-top: 15px !important; /* Jarak dari navbar */
+}
+.dropdown-item {
+    border-radius: 8px;
+    padding: 10px 15px;
+    color: #636e72;
+    font-weight: 500;
+}
+.dropdown-item:hover {
+    background-color: #F0F2F5;
+    color: #6c5ce7;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    height: 100vh;
-}
-
-/* Footer Styling */
+/* --- Footer (Vibrant Gradient) --- */
 .footer {
-    background-color: #0b2341;
-    color: #a0b8d8;
-    padding: 50px 0 30px;
+    /* Gradient Footer */
+    background: linear-gradient(135deg, #2d3436 0%, #000000 100%);
+    /* Alternatif jika ingin footer ungu: background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+    
+    color: #dfe6e9;
+    padding: 70px 0 40px;
+    border-top-left-radius: 60px; /* Lengkungan besar */
+    border-top-right-radius: 60px;
+    margin-top: 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Aksen lingkaran blur di footer (Hiasan) */
+.footer::before {
+    content: '';
+    position: absolute;
+    top: -50px; left: -50px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(108,92,231,0.3) 0%, rgba(0,0,0,0) 70%);
+    z-index: 0;
 }
 
 .footer-section h5 {
-    color: white;
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-}
-
-.footer-section ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-section ul li {
-    margin-bottom: 10px;
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: 0.5px;
 }
 
 .footer-section ul li a {
-    color: #a0b8d8;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.3s ease;
+    color: #b2bec3;
 }
-
 .footer-section ul li a:hover {
-    color: white;
-    text-decoration: none;
-}
-
-.security-section h5,
-.social-media-section h5 {
-    color: white;
-    margin-bottom: 15px;
-}
-
-.security-section img {
-    max-width: 150px;
-    height: auto;
-}
-
-.social-icons {
-    margin-top: 20px;
+    color: #ff7675; /* Hover Pink Pastel */
+    padding-left: 8px;
 }
 
 .social-icons a {
-    color: #a0b8d8;
-    font-size: 1.5rem;
-    margin: 0 10px;
-    transition: color 0.3s ease;
-}
-
-.social-icons a:hover {
+    background: rgba(255,255,255,0.1);
     color: white;
+    backdrop-filter: blur(5px);
+}
+.social-icons a:hover {
+    background: #FF4B6E; /* Social Icon Pink */
+    transform: translateY(-5px) rotate(10deg);
 }
 
 .footer-bottom {
-    background-color: #1a3970;
-    padding: 20px 0;
-    text-align: center;
+    background-color: #000;
+    padding: 25px 0;
 }
 
-.footer-links {
-    margin-bottom: 15px;
+/* --- Jelajah Specific Styles --- */
+        body {
+            background-color: var(--bg-body, #F9FAFD);
+        }
+
+        /* Filter Sidebar Card */
+        .filter-card {
+            background: white;
+            border-radius: 20px;
+            border: none;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.03);
+            position: sticky;
+            top: 100px; /* Sticky effect below Navbar */
+            z-index: 10;
+        }
+
+        .filter-section-title {
+            font-weight: 700;
+            color: #2D3436;
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        /* List Items (Filter) */
+        .filter-list-item {
+            padding: 10px 15px;
+            margin-bottom: 5px;
+            border-radius: 12px;
+            color: #636e72;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .filter-list-item:hover {
+            background-color: #f1f3f5;
+            color: var(--accent-color, #ff6b6b);
+            padding-left: 20px; /* Slight movement */
+        }
+
+        .filter-list-item.selected {
+            background-color: rgba(255, 107, 107, 0.1);
+            color: var(--accent-color, #ff6b6b);
+            font-weight: 700;
+        }
+
+        .filter-scroll-area {
+            max-height: 250px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+
+        /* Search Box inside Filter */
+        .filter-search input {
+            background-color: #f8f9fa;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            font-size: 0.85rem;
+        }
+        .filter-search input:focus {
+            background-color: white;
+            border-color: var(--accent-color, #ff6b6b);
+            box-shadow: none;
+        }
+
+        /* Main Content Header */
+        .page-header h2 {
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        /* Sort Button Custom */
+        .btn-sort {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-weight: 600;
+            color: #2D3436;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: all 0.3s;
+        }
+        .btn-sort:hover, .btn-sort.show {
+            border-color: var(--accent-color, #ff6b6b);
+            color: var(--accent-color, #ff6b6b);
+        }
+
+        /* Empty State */
+        .empty-state {
+            background: white;
+            border-radius: 20px;
+            border: 2px dashed #e0e0e0;
+            padding: 60px 20px;
+        }
+
+        /* --- Master Variable --- */
+:root {
+    --primary-color: #6c5ce7;
+    --accent-color: #ff6b6b;
+    --text-dark: #2D3436;
+    --text-muted: #636e72;
+    --bg-glass: rgba(255, 255, 255, 0.85);
 }
 
-.footer-links a {
-    color: #d1d9e6;
+/* --- Glassmorphism Navbar --- */
+.navbar {
+    background: var(--bg-glass);
+    backdrop-filter: blur(12px); /* Efek Blur Kaca */
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 15px 0;
+    position: sticky; /* Menempel di atas saat scroll */
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand {
+    font-family: 'Quicksand', sans-serif;
+    color: var(--text-dark) !important;
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    color: var(--text-dark) !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin: 0 5px;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: var(--primary-color) !important;
+}
+
+/* Tombol Toggler (Mobile) */
+.navbar-toggler {
+    border: none;
+    padding: 0;
+}
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+/* --- Search Bar Pill --- */
+.search-bar {
+    background-color: #F0F2F5; /* Abu-abu muda */
+    color: var(--text-dark);
+    border: 2px solid transparent;
+    border-radius: 50px !important;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.search-bar::placeholder {
+    color: #B2BEC3;
+}
+
+.search-bar:focus {
+    background-color: #fff;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
+    color: var(--text-dark);
+}
+
+/* --- Profile Icon --- */
+.profile-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white !important;
+    border-radius: 50%;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(118, 75, 162, 0.3);
+}
+
+.dropdown-menu {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    padding: 10px;
+    margin-top: 15px !important;
+}
+
+.dropdown-item {
+    border-radius: 8px;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+.dropdown-item:hover {
+    background-color: #F0F2F5;
+    color: var(--primary-color);
+}
+
+/* --- Footer Modern Gradient --- */
+.footer {
+    background: linear-gradient(135deg, #1e272e 0%, #000000 100%);
+    color: #dfe6e9;
+    padding: 70px 0 30px;
+    border-top-left-radius: 60px; /* Lengkungan Khas Korea */
+    border-top-right-radius: 60px;
+    margin-top: 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer h4, .footer h5 {
+    color: #fff;
+    font-weight: 700;
+}
+
+.footer p {
+    color: #b2bec3;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.footer ul {
+    padding: 0;
+    list-style: none;
+}
+
+.footer ul li {
+    margin-bottom: 10px;
+}
+
+.footer ul li a {
+    color: #b2bec3;
     text-decoration: none;
     font-size: 0.9rem;
-    margin: 0 10px;
+    transition: all 0.3s;
 }
 
-.footer-links span {
-    color: #d1d9e6;
+.footer ul li a:hover {
+    color: var(--accent-color);
+    padding-left: 5px;
 }
 
-.footer-links a:hover {
+.social-icons a {
+    width: 35px;
+    height: 35px;
+    background: rgba(255,255,255,0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
     color: white;
-    text-decoration: underline;
+    margin-right: 10px;
+    transition: all 0.3s;
+    text-decoration: none;
 }
 
-.copyright {
-    color: #d1d9e6;
-    font-size: 0.9rem;
-    margin: 0;
+.social-icons a:hover {
+    background: var(--accent-color);
+    transform: translateY(-3px);
 }
 
-/* Responsif untuk layar kecil */
-@media (max-width: 768px) {
-    .footer-section {
-        margin-bottom: 30px;
-    }
-    
-    .footer-links a {
-        display: block;
-        margin: 10px 0;
-    }
-    
-    .footer-links span {
-        display: none;
-    }
+.footer-bottom {
+    background-color: #000;
+    padding: 20px 0;
+    color: #636e72;
+    font-size: 0.85rem;
 }

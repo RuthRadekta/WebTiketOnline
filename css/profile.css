@@ -1,350 +1,488 @@
-html,
+/* --- Global Variables --- */
+:root {
+    --primary-color: #0b2341;
+    --accent-color: #ff6b6b; /* Warna Coral untuk aksen */
+    --active-gradient: linear-gradient(90deg, #ff6b6b 0%, #ff8e8e 100%);
+    --bg-body: #F5F7FA;
+    --card-radius: 20px;
+    --text-dark: #2D3436;
+}
+
 body {
+    background-color: var(--bg-body);
+    font-family: 'Quicksand', sans-serif;
     overflow-x: hidden;
-    background-color: #f8f9fa;
+    color: var(--text-dark);
 }
 
-.content-header {
-    font-size: 24px;
-    margin-right: auto;
-    margin: 0 40px;
-}
-.profile-container {
-    max-width: 90%;
-    margin: 30px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    animation: waveEffect 4s ease-out;
-}
-
-.btn-primary {
-    background-color: #0b2341;
-    border-color: #0b2341;
-}
-
-.btn-primary:hover {
-    background-color: #031125;
-    border-color: #031125;
-}
-
+/* --- SIDEBAR STYLING --- */
 .sidebar {
     height: 100vh;
-    background-color: #0b2341;
+    background-color: var(--primary-color);
     color: white;
     position: fixed;
     top: 0;
     left: 0;
-    width: 250px;
-    padding-top: 20px;
-    transition: width 0.3s ease;
+    width: 260px;
+    padding: 30px 15px;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar.shrink {
     width: 80px;
+    padding: 30px 10px;
 }
 
-.sidebar a {
-    color: white;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-}
-
-.sidebar a i {
-    width: 24px;
-    text-align: center;
-}
-
-.sidebar a span {
-    margin-left: 10px;
-}
-
-.sidebar.shrink a span {
-    display: none;
-}
-
-.sidebar a:hover {
-    background-color: #031125;
-}
-
-.sidebar .toggle-button {
-    position: absolute;
-    bottom: 20px;
-    left: 0;
-    background-color: #0b2341;
-    border: none;
-    display: flex;
-    padding: 10px 20px;
-    color: white;
-    width: 100%;
-    height: 50px;
-    cursor: pointer;
-}
-
-.sidebar .toggle-button:hover {
-    background-color: #031125;
-}
-
-.sidebar.shrink .toggle-button {
-    left: 0;
-    justify-content: center;
-}
-
-.sidebar .toggle-button span {
-    margin-left: 10px;
-    color: white;
-}
-
-.sidebar.shrink .toggle-button span {
-    display: none;
-}
-
-.dropdown-profile {
-    background-color: white;
-    color: #0b2341;
-    border-radius: 20px;
-    padding: 5px 15px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    position: relative;
-    transform: translateX(-20%); /* Moves it 10px to the left */
-}
-
-.dropdown-profile:hover {
-    background-color: #f0f0f0;
-}
-
-.dropdown-profile img {
-    width: 30px;
-    height: 30px;
-    margin-right: 40px;
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: auto;
-    min-width: 200px;
-    z-index: 1050;
-    display: none;
-    font-size: 14px;
-    background-color: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 0.25rem;
-    padding: 0.5rem 0;
-}
-
-.dropdown-profile:hover .dropdown-menu {
-    display: block;
-}
-
-.dropdown-menu a {
-    color: #0b2341;
-    text-decoration: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 1rem;
-}
-
-.dropdown-menu a:hover {
-    background-color: #f0f0f0;
-}
-
-.dropdown-menu .text-danger {
-    color: red;
-}
-
-.content-container {
-    margin-left: 250px;
-    transition: margin-left 0.3s ease;
-}
-
-.content-container.shrink {
-    margin-left: 80px;
-}
-
+/* Logo Area */
 .sidebar .logo {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 40px;
+    padding-left: 10px;
+}
+
+.sidebar .logo i {
+    font-size: 1.8rem;
+    margin-right: 10px;
+    color: var(--accent-color);
 }
 
 .sidebar.shrink .logo span {
     display: none;
 }
 
-.sidebar .logo i {
-    font-size: 24px;
+/* Menu Items */
+.sidebar-menu {
+    flex-grow: 1;
 }
 
-.profile-header {
-    font-size: 24px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 10px;
+.sidebar a.nav-link {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    border-radius: 12px; /* Sudut membulat */
+    transition: all 0.3s ease;
+    font-weight: 500;
 }
 
-.form-control {
+.sidebar a.nav-link i {
+    width: 24px;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-right: 15px;
+}
+
+.sidebar.shrink a.nav-link i {
+    margin-right: 0;
+}
+
+.sidebar.shrink a.nav-link span {
+    display: none;
+}
+
+/* Hover & Active State (K-Style Gradient) */
+.sidebar a.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    transform: translateX(5px);
+}
+
+.sidebar a.nav-link.active {
+    background: var(--active-gradient);
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    font-weight: 700;
+}
+
+/* Toggle Button */
+.toggle-btn-container {
+    margin-top: auto;
+}
+.sidebar .toggle-button {
+    background: rgba(255,255,255,0.1);
     border: none;
-    border-bottom: 2px solid #ccc;
-    border-radius: 0;
-    box-shadow: none;
-    transition: all 1, 5s;
-}
-
-.form-control:focus {
-    border-bottom: 2px solid #196dd3;
-    box-shadow: none;
-}
-
-/* Custom date picker styling */
-.custom-date-picker {
-    appearance: none; /* Removes default styles */
-    -webkit-appearance: none; /* For Safari */
-    border: none;
-    border-bottom: 2px solid #ccc;
-    border-radius: 0;
+    color: white;
+    width: 100%;
     padding: 10px;
-    font-size: 16px;
-    color: #333;
-    background-color: #f8f9fa;
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.custom-date-picker:focus {
-    border-bottom: 2px solid #196dd3; /* Changes border color when focused */
-    box-shadow: 0 2px 5px rgba(25, 109, 211, 0.3); /* Adds a subtle shadow */
-}
-
-.custom-date-picker::-webkit-calendar-picker-indicator {
+    border-radius: 10px;
     cursor: pointer;
-    filter: invert(0.4) sepia(1) saturate(5) hue-rotate(190deg); /* Custom icon color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+.sidebar .toggle-button:hover {
+    background: rgba(255,255,255,0.2);
+}
+.sidebar.shrink .toggle-button span {
+    display: none;
 }
 
-.custom-date-picker:hover {
-    border-bottom: 2px solid #196dd3;
+/* --- MAIN CONTENT STYLING --- */
+.content-container {
+    margin-left: 260px; /* Sesuai lebar sidebar */
+    padding: 30px;
+    transition: margin-left 0.3s ease;
+    min-height: 100vh;
 }
 
-@keyframes waveEffect {
-    0% {
-        background-color: #ffffff;
-    }
-
-    50% {
-        background-color: #f2f2f2;
-    }
-
-    100% {
-        background-color: #ffffff;
-    }
+.content-container.shrink {
+    margin-left: 80px;
 }
 
-input:focus {
-    animation: highlightInput 0.6s ease-in-out;
-}
-
-@keyframes highlightInput {
-    0% {
-        background-color: #ffffff;
-    }
-
-    50% {
-        background-color: #e0f7fa;
-    }
-
-    100% {
-        background-color: #ffffff;
-    }
-}
-
-.setting-item {
-    padding: 15px;
-    margin-bottom: 10px;
-    background-color: #eef3fc;
-    border-radius: 8px;
+/* Header Content */
+.profile-top-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 30px;
 }
 
-.setting-header {
-    font-weight: bold;
-    font-size: 16px;
+.profile-top-header h2 {
+    font-weight: 800;
+    color: var(--text-dark);
 }
 
-.setting-description {
-    font-size: 14px;
-    color: #6c757d;
-    margin-top: 5px;
-}
-
-.setting-toggle input[type="checkbox"] {
-    transform: scale(1.5);
-}
-
-.setting-action i {
-    font-size: 24px;
+/* User Dropdown di Kanan Atas */
+.user-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: white;
+    padding: 8px 15px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     cursor: pointer;
+    transition: transform 0.2s;
+}
+.user-dropdown:hover {
+    transform: translateY(-2px);
+}
+.user-dropdown img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
-.setting-action i:hover {
-    color: #dc3545;
-}
-
-.close-account-container {
-    padding: 20px;
+/* --- Profile Form Card --- */
+.profile-card {
     background-color: #ffffff;
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    margin-top: 20px;
+    border-radius: var(--card-radius);
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05); /* Bayangan lembut */
+    border: 1px solid rgba(0,0,0,0.02);
 }
 
-.close-account-container h3 {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: var(--text-dark);
+    border-left: 4px solid var(--accent-color);
+    padding-left: 15px;
 }
 
-.close-account-container ul {
-    list-style-type: disc;
-    padding-left: 20px;
-    margin-bottom: 15px;
+/* Modern Form Inputs */
+.form-label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #636e72;
+    margin-bottom: 8px;
 }
 
-.close-account-container button {
-    background-color: #e0e0e0;
-    color: #ffffff;
+.form-control, .form-select {
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    padding: 12px 15px;
+    background-color: #fdfdfd;
+    transition: all 0.3s;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #6c5ce7; /* Ungu Modern */
+    box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
+    background-color: #fff;
+}
+
+/* Readonly Input */
+.form-control[readonly] {
+    background-color: #f1f2f6;
+    color: #b2bec3;
+    border-color: transparent;
+}
+
+/* Button */
+.btn-save {
+    background-color: var(--primary-color);
+    color: white;
     border: none;
+    border-radius: 12px;
+    padding: 12px 30px;
+    font-weight: 700;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(11, 35, 65, 0.2);
+}
+
+.btn-save:hover {
+    background-color: #1a3c66;
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 80px; /* Force shrink on mobile */
+    }
+    .sidebar a.nav-link span, .sidebar .logo span, .sidebar .toggle-button span {
+        display: none;
+    }
+    .sidebar a.nav-link i {
+        margin-right: 0;
+    }
+    .content-container {
+        margin-left: 80px;
+        padding: 15px;
+    }
+    .toggle-button {
+        display: none !important;
+    }
+}
+
+/* --- TICKET HISTORY CARD --- */
+.ticket-card {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #f1f2f6;
+    overflow: hidden;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.ticket-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(108, 92, 231, 0.1);
+    border-color: #e0e0e0;
+}
+
+.ticket-img {
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    object-fit: cover;
+}
+
+.ticket-body {
+    padding: 25px;
+}
+
+.ticket-status {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.status-success { background: #e6fffa; color: #00b894; }
+.status-pending { background: #fff8e1; color: #ffa502; }
+.status-failed { background: #ffebee; color: #ff4757; }
+
+.ticket-date {
+    color: #a4b0be;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.ticket-title {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.ticket-info-row {
+    display: flex;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.ticket-info-row i {
+    width: 20px;
+    color: #6c5ce7;
+    margin-right: 8px;
+}
+
+.ticket-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+/* --- Tabs Styling --- */
+.custom-tabs {
+    border-bottom: 2px solid #f1f2f6;
+    margin-bottom: 30px;
+}
+
+.custom-tabs .nav-link {
+    border: none;
+    color: #a4b0be;
+    font-weight: 600;
     padding: 10px 20px;
-    margin-top: 20px;
-    border-radius: 5px;
+    background: transparent;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+}
+
+.custom-tabs .nav-link:hover {
+    color: #6c5ce7;
+}
+
+.custom-tabs .nav-link.active {
+    color: #6c5ce7;
+    border-bottom-color: #6c5ce7;
+    background: transparent;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #b2bec3;
+}
+.empty-state i {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    color: #dfe6e9;
+}
+
+/* --- SETTINGS PAGE STYLES --- */
+
+/* Danger Zone Card */
+.danger-zone {
+    border: 1px solid #ff7675;
+    background-color: #fff5f5; /* Merah sangat muda */
+    border-radius: 16px;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+.danger-title {
+    color: #d63031;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.danger-desc {
+    color: #636e72;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+/* Accordion Custom Style (untuk Tutup Akun) */
+.accordion-item {
+    border: none;
+    background: transparent;
+}
+
+.accordion-button {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px !important;
+    font-weight: 600;
+    color: var(--text-dark);
+    padding: 15px 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #f1f2f6;
+    color: var(--primary-color);
+    box-shadow: none;
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
+    border-color: #6c5ce7;
+}
+
+.accordion-body {
+    background-color: white;
+    border: 1px solid #f1f2f6;
+    border-top: none;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 20px;
+    margin-top: -5px; /* Supaya nempel */
+}
+
+/* List Peringatan */
+.warning-list {
+    list-style: none;
+    padding: 0;
+}
+
+.warning-list li {
+    padding-left: 25px;
+    position: relative;
+    margin-bottom: 8px;
+    color: #636e72;
+    font-size: 0.9rem;
+}
+
+.warning-list li::before {
+    content: "\f071"; /* FontAwesome Warning Icon code */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    color: #e17055;
+    position: absolute;
+    left: 0;
+    top: 2px;
+}
+
+/* Tombol Hapus */
+.btn-danger-soft {
+    background-color: #ffebee;
+    color: #d63031;
+    border: 1px solid #ff7675;
+    font-weight: 600;
+    padding: 10px 25px;
+    border-radius: 50px;
+    transition: all 0.3s;
+}
+
+.btn-danger-soft:hover:not(:disabled) {
+    background-color: #d63031;
+    color: white;
+}
+
+.btn-danger-soft:disabled {
+    opacity: 0.6;
     cursor: not-allowed;
-    transition: background-color 0.3s ease;
-}
-
-.close-account-container button.enabled {
-    cursor: pointer;
-    background-color: #007bff;
-}
-
-.close-account-container button.enabled:hover {
-    background-color: #0056b3;
-}
-
-.sidebar a.active {
-    background-color: #007bff;
-    color: #ffffff;
-    border-radius: 5px;
-}
-
-.sidebar a.active:hover {
-    background-color: #0056b3;
+    background-color: #f1f2f6;
+    border-color: #dfe6e9;
+    color: #b2bec3;
 }
