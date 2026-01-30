@@ -512,7 +512,7 @@ const isUserLoggedIn = <?php echo $isLoggedIn ? 'true' : 'false'; ?>;
                 document.getElementById('paymentDesc').innerText = "Terima kasih, tiket Anda telah terbit. Mengalihkan...";
                 
                 setTimeout(() => {
-                    window.location.href = `http://localhost/pemweb_uas-main/php/riwayat.php`; // Redirect ke riwayat
+                    window.location.href = `http://localhost/WebTiketOnline/php/riwayat.php`; // Redirect ke riwayat
                 }, 2000);
             } else {
                 throw new Error("Gagal buat order: " + data.message);
